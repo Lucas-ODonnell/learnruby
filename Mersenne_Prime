@@ -1,11 +1,10 @@
-def is_prime?(num)
-    return false if num.even?
-    (2...num).all? { |i| num % i != 0 }
-end
+# def is_prime?(num)
+#     return false if num.even?
+#     (2...num).all? { |i| num % i != 0 }
+# end
 
 def power_of_two?(number)
-    power_two = Math.log2(number) 
-    return true if power_two - power_two.floor == 0
+    return true if Math.log2(number) % 1 == 0
     false
 end
 
@@ -13,7 +12,7 @@ def mersenne_prime(n)
     arr = []
     count = 2
     while arr.length < n 
-        arr << count if is_prime?(count) && power_of_two?(count + 1)
+        arr << count if Prime.instance.prime?(count) && power_of_two?(count + 1)
         count += 1
     end
     arr.last
