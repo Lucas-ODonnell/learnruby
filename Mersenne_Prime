@@ -3,15 +3,9 @@ def is_prime?(num)
 end
 
 def power_of_two?(number)
-    number = number 
-    while number > 2
-        if number % 2 == 0
-        number = number / 2
-        else
-            return false
-        end
-    end
-    return true if number == 2
+    power_two = Math.log2(number) 
+    return true if power_two - power_two.floor == 0
+    false
 end
 
 def mersenne_prime(n)
