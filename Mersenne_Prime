@@ -1,4 +1,5 @@
 def is_prime?(num)
+    return false if num.even?
     (2...num).all? { |i| num % i != 0 }
 end
 
