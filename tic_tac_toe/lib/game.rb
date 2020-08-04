@@ -3,13 +3,13 @@ require_relative "players"
 class Game
     private
     def initialize
-        welcome 
-        @player_1 = Player.new(:X)
+        welcome #greeting for the player
+        @player_1 = Player.new(:X) #choosing marks for players to make things less complicated.
         @player_2 = Player.new(:O)
         @current_player = @player_1
         @board = Board.new
         system("clear")
-        play_game
+        play_game #run the game
     end
 
     def welcome
@@ -23,7 +23,7 @@ class Game
     end
 
     
-    def current_player_switch
+    def current_player_switch #seems easier than making an array
         if @current_player == @player_1
             @current_player = @player_2 
         else
@@ -32,7 +32,7 @@ class Game
     end
 
     def play_game
-        until @board.empty_positions? == false
+        until @board.empty_positions? == false #this logic runs until this becomes true.
             @board.print
             puts
             puts
@@ -41,8 +41,8 @@ class Game
             puts "If you choose a position that has already been taken, because you can't count
             the other player gets to go."
             print "Input: "
-            
-            
+    #because current player is an instance of Player class we can use the choose_position method from       
+    #the players class.        
             pos = @current_player.choose_position
             @board.mark_position(pos, @current_player.players_value)
             if @board.win?(@current_player.players_value)
