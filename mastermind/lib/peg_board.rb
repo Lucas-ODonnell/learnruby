@@ -29,26 +29,33 @@ class PegBoard
         player_input.each.with_index { |ele, idx| @board[idx] = ele }
     end
 
-    # Takes an array of the players guess. If the idx is used as a key
-    # and the element is equal to the value ele becomes white
-    # if its the correct color, but in the wrong place it becomes black
-    # if its neither in the right place or right color it returns the original
-    # color
-
+    
     def return_guess(player_input) 
-        player_input.map!.with_index do |ele, idx|
-            if @board[idx] == ele 
-                "white"
-            elsif @board.has_value?(ele) && @board[idx] != ele
-                "black" 
-            else 
-                ele 
-            end 
+        #make empty array
+        arr = Array.new(4)
+        #make a temporary board
+        temp = @board.dup
+        player_input.map.with_index do |ele, idx|
+            if @board[idx] == ele
+                arr[idx] = "black"
+                temp[idx] = "black" #need to turn this black so we don't get false whites
+            else                    
+                arr[idx] = ele  
+            end
         end
+        
+        final_value = arr.each.with_index do |ele, idx|
+            if temp[idx] != ele && temp.has_value?(ele) 
+                arr[idx] = "white"
+            else
+                ele
+            end
+        end
+        final_value  
     end
-
+     
     def win?(player_input)
-        return_guess(player_input).all? { |ele| ele == "white" }
+        return_guess(player_input).all? { |ele| ele == "black" }
     end
 
     def failed_tries(player_input)

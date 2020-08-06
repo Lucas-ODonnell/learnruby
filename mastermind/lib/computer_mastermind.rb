@@ -4,8 +4,8 @@ require_relative "peg_board.rb"
 puts "Welcome to Mastermind. In this version you selected you need to break
 the computers four part code. Code colors are red, blue, green, orange, yellow
 and purple. The code could be [red, green, orange, yellow]. If you successfully
-put in red, green, orange, yellow the computer would return [white, white, white, white].
-If the color is right, but the position is wrong, the computer will return the color as black.
+put in red, green, orange, yellow the computer would return [black, black, black, black].
+If the color is right, but the position is wrong, the computer will return the color as white.
 If the color is wrong and the position is wrong the computer will return your original color.
 You have 12 guesses until you lose"
 print "Press enter if you are ready to play: "
@@ -27,8 +27,10 @@ player_guess = player.player_input
       return
   else
       puts "#{computer_board.return_guess(player_guess)} not quite there
-      you'll get it next time."
+      you'll get it next time. Press enter to try again"
       computer_board.failed_tries(player_guess)
+      gets.chomp 
+      system("clear")
   end
 end 
 
