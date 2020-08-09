@@ -1,15 +1,23 @@
+require_relative "peg_board"
 class HumanPlayer
     attr_reader :name
+    attr_accessor :score
     def initialize(name)
         @name = name
+        @score = 0
     end 
 
     def player_input #guess
         guess = []
-        4.times do 
+        until guess.length == 4 
         print "Please input a color: "
-        guess << gets.chomp
-        end 
-        guess.map! { |ele| ele.downcase }
+        player_guess = gets.chomp.downcase
+            if PegBoard::COLORS.include?(player_guess)
+            guess << player_guess
+            else
+                puts "That is not a valid color"
+            end
+        end
+        guess
     end
 end

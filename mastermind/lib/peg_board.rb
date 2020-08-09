@@ -1,5 +1,5 @@
 require_relative "human_player"
-require_relative "computer_player"
+require_relative "smart_computer"
 class PegBoard
     COLORS = ["red", "blue", "green", "orange", "yellow", "purple"]
     
@@ -53,9 +53,14 @@ class PegBoard
         end
         final_value  
     end
-     
+
     def win?(player_input)
         return_guess(player_input).all? { |ele| ele == "black" }
+    end
+    
+    def hash_to_array(hash)
+        arr = hash.sort_by { |k,v| k }
+        arr.flatten.filter_map.with_index { |ele,idx| ele if idx.odd? }
     end
 
     def failed_tries(player_input)
