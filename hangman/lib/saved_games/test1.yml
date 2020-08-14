@@ -1,0 +1,20 @@
+--- !ruby/object:Hangman
+rand_word: liberalist
+board:
+- _
+- i
+- _
+- e
+- _
+- a
+- _
+- i
+- _
+- _
+used_letters:
+- a
+- i
+- u
+- e
+- o
+tries: 10

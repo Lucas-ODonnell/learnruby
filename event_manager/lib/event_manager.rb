@@ -16,11 +16,11 @@ def clean_phone(phone_number)
   formatted = formatted_phone(phone_number)
   begin 
   if formatted.length == 10
-      formatted
+      formatted.insert(3,"-").insert(-5,"-") 
     elsif formatted.length == 11 && formatted.split("").first == "1"
       new_number = formatted.split("")
       new_number.shift
-      new_number.join("")
+      new_number.join("").insert(3,"-").insert(-5, "-")
   end
   rescue
   "You did not provide us with your phone number."
@@ -66,8 +66,7 @@ contents.each do |row|
   name = row[:first_name]
   zipcode = clean_zipcode(row[:zipcode])
   legislators = legislators_by_zipcode(zipcode)
-  individuals_phone = clean_phone(row[:HomePhone])
-  puts row[:HomePhone]
+  individuals_phone = clean_phone(row[5])
 
   form_letter = erb_template.result(binding)
 

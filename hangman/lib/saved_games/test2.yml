@@ -1,0 +1,17 @@
+--- !ruby/object:Hangman
+rand_word: reputed
+board:
+- _
+- e
+- _
+- u
+- _
+- e
+- _
+used_letters:
+- a
+- i
+- u
+- e
+- o
+tries: 6
