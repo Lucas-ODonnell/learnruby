@@ -1,6 +1,14 @@
-require_relative "tree_node"
+class TreeNode
+    attr_accessor :value, :left, :right 
+    def initialize(value, left = nil, right = nil)
+        @value = value
+        @left = left
+        @right = right
+    end
+end
+
 class Tree
-    attr_accessor :array, :node
+   attr_accessor :array, :node
 
     def initialize(array)
         @node = build_tree(array)
@@ -34,6 +42,26 @@ class Tree
         false
     end
 
+     def level_order()  #done
+        level_order_arr = []
+        queue = Queue.new
+        queue << @node 
+
+        while (!queue.empty?)
+            temp_node = queue.pop
+            level_order_arr.push(temp_node.value)
+            if (temp_node.left.value != nil)
+                queue << temp_node.left
+            end
+
+            if (temp_node.right.value != nil)
+                queue << temp_node.right
+            end
+        end
+
+        return level_order_arr
+    end
+
     def insert(node, value)
         return if contains?(node, value)
         if node.nil?
@@ -48,16 +76,7 @@ class Tree
     end
 
     def delete(node, value)
-        raise "error" if node.nil?
         
-        to_delete = find(node, value)
-        parent = find_parent_of(node, value)
-        if to_delete.left.nil? && to_delete.right.nil? 
-            parent.left == to_delete ? parent.left = nil : parent.right = nil 
-            to_delete.value = nil
-        elsif to_delete.left.nil? || to_delete.right.nil? && !(to_delete.left.nil? && to_delete.right.nil?)
-            parent.left == to_delete
-        end
     end
 
     def find(node, value)
@@ -88,5 +107,4 @@ class Tree
         puts "#{prefix}#{is_left ? "└── " : "┌── "}#{tree_node.value.to_s}"
         pretty_print(tree_node.left, "#{prefix}#{is_left ? " " : "│ "}", true) if tree_node.left
     end
-
 end
