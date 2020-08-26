@@ -31,35 +31,7 @@ class Tree
         return false if node.nil?
         return true if node.value == value 
 
-        left_side = contains?(node.left, value)
-        if left_side
-            return true
-        end 
-        right_side = contains?(node.right, value)
-        if right_side
-            return true 
-        end
-        false
-    end
-
-     def level_order()  #done
-        level_order_arr = []
-        queue = Queue.new
-        queue << @node 
-
-        while (!queue.empty?)
-            temp_node = queue.pop
-            level_order_arr.push(temp_node.value)
-            if (temp_node.left.value != nil)
-                queue << temp_node.left
-            end
-
-            if (temp_node.right.value != nil)
-                queue << temp_node.right
-            end
-        end
-
-        return level_order_arr
+        contains?(node.left, value) || contains?(node.right, value)
     end
 
     def insert(node, value)
@@ -76,30 +48,58 @@ class Tree
     end
 
     def delete(node, value)
-        
+        if node.nil?
+            return node 
+        elsif node.value > value 
+            delete(node.left, value)
+        elsif node.value < value 
+            delete(node.right, value)
+        else
+            ######we are at the node to be deleted###
+            if node.left.nil? && node.right.nil? 
+                node.value = nil
+                node
+            elsif node.left.nil?
+                temp = node 
+                node = node.right
+                temp.value = nil  
+            elsif node.right.nil?
+                temp = node  
+                node = node.left
+                temp.value = nil
+            else
+                temp = find_max(node.left)
+                left_child = node.left 
+                right_child = node.right 
+                node.value = temp.value 
+                node.left = left_child
+                node.right = right_child 
+                node.left = delete(node.left, temp.value)
+            end
+            node
+        end
+    end
+
+    def find_max(node)
+        return node if node.right.nil?
+
+        find_max(node.right)
     end
 
     def find(node, value)
-        puts "That is not a valid node" unless contains?(node, value)
-        return node if node.value == value
-        
-        if node.value > value 
-            find(node.left, value)
-        elsif node.value < value 
-            find(node.right, value)
-        end
+        return false if node.nil?
+        return node if node.value == value 
+
+        find(node.left, value) || find(node.right, value)
     end
 
     def find_parent_of(node, value) #put the child to find the parent
         child = find(node, value)
+        return false if node.nil?
         return node if node.left == child 
         return node if node.right == child
 
-        if node.value > value 
-            find_parent_of(node.left, value)
-        elsif node.value < value 
-            find_parent_of(node.right, value)
-        end
+        find_parent_of(node.left, value) || find_parent_of(node.right, value)
     end
 
     def pretty_print(tree_node = node, prefix="", is_left = true) #thanks 
