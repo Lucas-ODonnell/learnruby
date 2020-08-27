@@ -34,20 +34,25 @@ class Tree
         contains?(node.left, value) || contains?(node.right, value)
     end
 
-    def insert(node, value)
+    def insert(node, value) #this is causing errors need to fix
         return if contains?(node, value)
-        if node.nil?
-            node = TreeNode.new(value)
-        end
-        
-        if node.value < value 
-            node.right.nil? ? node.right = TreeNode.new(value) : insert(node.right, value)
+        return if node.nil?
+
+        if node.value > value && !node.left.nil? && !node.right.nil?
+            insert(node.left, value)
+        elsif node.value < value && !node.left.nil? && !node.right.nil?
+            insert(node.right, value)
         else
-            node.left.nil? ? node.left = TreeNode.new(value) : insert(node.left, value)
+
+            if node.value > value 
+                node.left = TreeNode.new(value)
+            else
+                node.right = TreeNode.new(value)
+            end
         end
     end
 
-    def delete(node, value)
+    def delete(node, value) 
         if node.nil?
             return node 
         elsif node.value > value 
@@ -56,28 +61,41 @@ class Tree
             delete(node.right, value)
         else
             ######we are at the node to be deleted###
-            if node.left.nil? && node.right.nil? 
+            if node.left.nil? && node.right.nil?
                 node.value = nil
-                node
             elsif node.left.nil?
-                temp = node 
-                node = node.right
-                temp.value = nil  
+                temp = node
+                parent = find_parent_of(self.node, temp.value)
+                parent.value > node.right.value ? parent.left = node.right : parent.right = node.right
+                temp.value = nil   
             elsif node.right.nil?
-                temp = node  
-                node = node.left
-                temp.value = nil
+                temp = node
+                parent = find_parent_of(self.node, temp.value)
+                parent.value > node.left.value ? parent.left = node.left : parent.right = node.left
+
+                temp.value = nil   
             else
                 temp = find_max(node.left)
                 left_child = node.left 
-                right_child = node.right 
                 node.value = temp.value 
-                node.left = left_child
-                node.right = right_child 
                 node.left = delete(node.left, temp.value)
+                node.left = left_child
             end
-            node
         end
+        delete_children(node)
+        node 
+    end
+
+    def delete_children(node) #deletes when a parent is pointing to a nil child
+        return if node.nil?
+        return if node.left.nil? || node.right.nil?
+            
+        if node.left.value == nil
+            node.left = nil
+        elsif node.right.value == nil
+            node.right = nil
+        end 
+        delete_children(node.left) || delete_children(node.right)  
     end
 
     def find_max(node)
