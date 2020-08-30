@@ -128,7 +128,41 @@ class Tree
 
         find_parent_of(node.left, value) || find_parent_of(node.right, value)
     end
+    ########depth
+    def preorder(node, array = [])
+        if node.nil?
+            return
+        else
+            array.push(node.value)
 
+            preorder(node.left, array)         
+            preorder(node.right, array)
+        end
+        array
+    end
+
+    def inorder(node, array =  [])
+        if node.nil?
+            return 
+        else
+            inorder(node.left, array)
+            array.push(node.value)
+            inorder(node.right, array)
+        end
+        array
+    end
+
+    def postorder(node, array = [])
+        if node.nil?
+            return
+        else
+            postorder(node.left, array)
+            postorder(node.right, array)
+            array.push(node.value)
+        end
+        array 
+    end
+     ####breadth
     def level_order_traversel(node)
         return if node.nil?
         level_order = []
@@ -188,10 +222,11 @@ class Tree
 
     def rebalance(node)
         if balanced?(node)
-            puts "the tree is already balanced"
+            puts "The tree is already balanced"
         else
             array = level_order_traversel(node)
             self.node = build_tree(array)
+            puts "Your tree has been balanced"
         end
 
     end
