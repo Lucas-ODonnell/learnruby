@@ -1,3 +1,5 @@
+require_relative "bst_helpers"
+include Helpers
 class TreeNode
     attr_accessor :value, :left, :right 
     def initialize(value, left = nil, right = nil)
@@ -25,14 +27,7 @@ class Tree
         tree.right = build_tree(sorted_array[mid + 1..-1])
         tree
     end
-
-    def contains?(node, value)
-        return false if node.nil?
-        return true if node.value == value 
-
-        contains?(node.left, value) || contains?(node.right, value)
-    end
-
+    
     def insert(node, value) #this is causing errors need to fix
         return if contains?(node, value)
         return if node.nil?
@@ -76,41 +71,23 @@ class Tree
             else
                 parent = find_parent_of(self.node, node.value)
                 if parent.left == node 
-                    temp = find_max(node.left)
+                    temp = find_min(node.left)
                     left_child = node.left 
                     node.value = temp.value 
                     node.left = left_child
                     node.left = delete(node.left, temp.value)
                     parent.left = node 
                 else
-                    temp = find_max(node.left)
-                    left_child = node.left 
+                    temp = find_min(node.right)
+                    right_child = node.right 
                     node.value = temp.value
-                    node.left = left_child
-                    node.left = delete(node.left, temp.value)
+                    node.right = right_child
+                    node.right = delete(node.right, temp.value)
                     parent.right = node
                 end 
             end
         end
         delete_children(node)
-    end
-
-    def delete_children(node) #deletes when a parent is pointing to a nil child
-        return if node.nil?
-        return if node.left.nil? || node.right.nil?
-            
-        if node.left.value == nil
-            node.left = nil
-        elsif node.right.value == nil
-            node.right = nil
-        end 
-        delete_children(node.left) || delete_children(node.right)  
-    end
-
-    def find_max(node)
-        return node if node.right.nil?
-
-        find_max(node.right)
     end
 
     def find(node, value)
@@ -120,14 +97,6 @@ class Tree
         find(node.left, value) || find(node.right, value)
     end
 
-    def find_parent_of(node, value) #put the child to find the parent
-        child = find(node, value)
-        return false if node.nil?
-        return node if node.left == child 
-        return node if node.right == child
-
-        find_parent_of(node.left, value) || find_parent_of(node.right, value)
-    end
     ########depth
     def preorder(node, array = [])
         if node.nil?
@@ -230,41 +199,7 @@ class Tree
         end
 
     end
-    #####helper methods for balanced
-    def left_height(node, value, count=0)
-        return if node.nil?
-        if node.value > value 
-            left_height(node.left, value)
-        elsif node.value < value 
-            left_height(node.right, value)
-        else
-            if node.left.nil? && node.right.nil?
-                count
-            elsif !node.left.nil?
-                left_height(node.left, node.left.value, count+=1)
-            else
-                0
-            end
-        end
-    end
-
-    def right_height(node, value, count=0)
-        return if node.nil?
-        if node.value > value 
-            right_height(node.left, value)
-        elsif node.value < value 
-            right_height(node.right, value)
-        else
-            if node.left.nil? && node.right.nil?
-                count
-            elsif !node.right.nil?
-                right_height(node.right, node.right.value, count+=1)
-            else
-                0
-            end
-        end
-    end
-    #####################3
+    
     def pretty_print(tree_node = node, prefix="", is_left = true) #thanks 
         pretty_print(tree_node.right, "#{prefix}#{is_left ? "│ " : " "}", false) if tree_node.right
         puts "#{prefix}#{is_left ? "└── " : "┌── "}#{tree_node.value.to_s}"
