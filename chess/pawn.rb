@@ -3,8 +3,9 @@ require_relative "player"
 require_relative "board"
 class Pawn < Piece
     attr_reader :color
-    attr_accessor :count, :name   
+    attr_accessor :count, :name, :pos   
     def initialize(color)
+        @pos = []
         @name = @color == "black" ? "\u265F" : "\u2659"
         @count = 0
         @color = color
