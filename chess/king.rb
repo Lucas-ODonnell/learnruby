@@ -6,6 +6,6 @@ class King
         @count = 0
         @pos = []
         @color = color 
-        @name = @color == "black" ? "\u265A" : "\u2654"
+        @name = @color == "white" ? "\u265A" : "\u2654"
     end
 end

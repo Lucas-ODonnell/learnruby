@@ -6,7 +6,7 @@ class Rook
         @count = 0
         @pos = [] 
         @color = color 
-        @name = @color == "black" ? "\u265C" : "\u2656"
+        @name = @color == "white" ? "\u265C" : "\u2656"
     end
 
     def valid_move

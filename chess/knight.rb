@@ -6,7 +6,7 @@ class Knight
         @count = 0
         @pos = []
         @color = color 
-        @name = @color == "black" ? "\u265E" : "\u2658"
+        @name = @color == "white" ? "\u265E" : "\u2658"
     end
 end
 

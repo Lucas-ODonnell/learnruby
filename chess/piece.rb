@@ -4,8 +4,18 @@ module Piece
         pos, col = starting
         pos1, col1 = ending 
         starting_pos = board[pos][col]
-        board[pos1][col1] = starting_pos
-        board[pos1][col1].count += 1 
+        
+        if board[pos1][col1] == "x" || board[pos1][col1] == "o"
+            board[pos1][col1] = starting_pos
+            board[pos1][col1].count += 1 
+        elsif board[pos1][col1].color != starting_pos.color
+            board[pos1][col1] = starting_pos
+            board[pos1][col1].count += 1
+        else
+            puts "That is not a valid move!"
+            return 
+        end
+
         if starting[0].even?
             starting[1].even? ? board[pos][col] = "o" : board[pos][col] = "x"
         else 

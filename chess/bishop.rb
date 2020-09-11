@@ -6,6 +6,6 @@ class Bishop
         @count = 0
         @pos = []
         @color = color 
-        @name = @color == "black" ? "\u265D" : "\u2657"
+        @name = @color == "white" ? "\u265D" : "\u2657"
     end
 end

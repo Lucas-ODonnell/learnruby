@@ -6,6 +6,6 @@ class Queen
         @count = 0
         @pos = []
         @color = color 
-        @name = @color == "black" ? "\u265B" : "\u2655"
+        @name = @color == "white" ? "\u265B" : "\u2655"
     end
 end
