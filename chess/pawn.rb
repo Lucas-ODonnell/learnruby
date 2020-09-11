@@ -1,7 +1,7 @@
 require_relative "piece"
 require_relative "player"
 require_relative "board"
-class Pawn < Piece
+class Pawn 
     attr_reader :color
     attr_accessor :count, :name, :pos   
     def initialize(color)

@@ -7,7 +7,7 @@ require "./king.rb"
 require "./queen.rb"
 require "./rook.rb"
 require "./knight.rb"
-
+include Piece 
 class Game 
     attr_accessor :white_pawns, :black_pawns, :board
     attr_reader :player1, :player2
@@ -53,7 +53,7 @@ class Game
                         bishop2.pos = [idx1, 5] 
                     queen = self.board.board[idx1][3] = Queen.new(player2.color)
                         queen.pos = [idx1, 3] 
-                    king = self.board.board[idx1][4] = King.new(player2.color)
+                    king = self.board.board[idx1][4] = King.new(player2.color) 
                         king.pos = [idx1, 4] 
                 elsif idx1 == 0
                     rook1 = self.board.board[idx1][0] = Rook.new(player1.color)

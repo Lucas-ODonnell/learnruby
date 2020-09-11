@@ -1,8 +1,9 @@
 require_relative "piece"
-class Rook < Piece
+class Rook 
     attr_reader :color, :name
-    attr_accessor :pos 
+    attr_accessor :pos, :count 
     def initialize(color)
+        @count = 0
         @pos = [] 
         @color = color 
         @name = @color == "black" ? "\u265C" : "\u2656"
