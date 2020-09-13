@@ -1,27 +1,27 @@
 module Piece
-    def move_position(starting, ending)
+  def move_position(starting, ending)
         board = self.board.board 
-        pos, col = starting
-        pos1, col1 = ending 
-        starting_pos = board[pos][col]
-        
-        if board[pos1][col1] == "x" || board[pos1][col1] == "o"
-            board[pos1][col1] = starting_pos
-            board[pos1][col1].count += 1 
-            starting_pos.pos = [pos1,col1]
-        elsif board[pos1][col1].color != starting_pos.color
-            board[pos1][col1] = starting_pos
-            board[pos1][col1].count += 1
-            starting_pos.pos = [pos1,col1]
+        row, col = starting
+        row1, col1 = ending 
+        piece = board[row][col]
+        if board[row1][col1] == "x" || board[row1][col1] == "o" 
+            return "That is not valid" unless piece.valid_move?(ending)
+            board[row1][col1] = piece
+            board[row1][col1].count += 1 
+            piece.pos = [row1,col1]
+        elsif board[row1][col1].color != piece.color 
+            return "That is not valid" unless piece.valid_move?(ending)
+            board[row1][col1] = piece
+            board[row1][col1].count += 1
+            piece.pos = [row1,col1]
         else
-            puts "That is not a valid move!"
-            return 
+            return "That is not a valid position"
         end
 
         if starting[0].even?
-            starting[1].even? ? board[pos][col] = "o" : board[pos][col] = "x"
+            starting[1].even? ? board[row][col] = "o" : board[row][col] = "x"
         else 
-            starting[1].even? ? board[pos][col] = "x" : board[pos][col] = "o"
+            starting[1].even? ? board[row][col] = "x" : board[row][col] = "o"
         end 
     end
 end
