@@ -8,9 +8,11 @@ module Piece
         if board[pos1][col1] == "x" || board[pos1][col1] == "o"
             board[pos1][col1] = starting_pos
             board[pos1][col1].count += 1 
+            starting_pos.pos = [pos1,col1]
         elsif board[pos1][col1].color != starting_pos.color
             board[pos1][col1] = starting_pos
             board[pos1][col1].count += 1
+            starting_pos.pos = [pos1,col1]
         else
             puts "That is not a valid move!"
             return 

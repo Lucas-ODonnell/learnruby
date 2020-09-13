@@ -9,6 +9,7 @@ class Rook
         @name = @color == "white" ? "\u265C" : "\u2656"
     end
 
-    def valid_move
+    def valid_move 
     end
 end
+
