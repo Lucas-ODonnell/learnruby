@@ -11,16 +11,45 @@ class Rook
 
     def valid_move?(new_pos)
       pos = self.pos
-      range = (0..7)
-      row, col = new_pos
-      row1, col1 = pos
-      if range.include?(row) && col1 == col
+      if up(pos).include?(new_pos) || left(pos).include?(new_pos)
         true
-      elsif row == row1 && range.include?(col)
+      elsif right(pos).include?(new_pos) || down(pos).include?(new_pos)
         true
       else
         false
       end
+    end
+      
+    def up(pos)
+      array = [pos] 
+      until array.last[0] == 0 
+        array << [array.last[0] - 1, array.last[1]]
+      end
+      array 
+    end
+
+    def left(pos)
+      array = [pos]
+      until array.last[1] == 0
+        array << [array.last[0], array.last[1] - 1]
+      end
+      array
+    end
+
+    def right(pos)
+      array = [pos]
+      until array.last[1] == 7
+        array << [array.last[0], array.last[1] + 1]
+      end
+      array
+    end
+
+    def down(pos)
+      array = [pos]
+      until array.last[0] == 7
+        array << [array.last[0] + 1, array.last[1]]
+      end
+      array
     end
 end
 
