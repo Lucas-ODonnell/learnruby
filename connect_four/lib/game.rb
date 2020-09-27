@@ -5,8 +5,8 @@ class Game
     attr_accessor :current_player
     def initialize
         welcome 
-        @player_1 = Player.new("R")
-        @player_2 = Player.new("Y")
+        @player_1 = Player.new("🔴")
+        @player_2 = Player.new("🟡")
         @current_player = @player_1 
         @board = Board.new 
         system("clear")

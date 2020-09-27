@@ -1,7 +1,7 @@
 class Board
     attr_accessor :board, :physics 
     def initialize
-        @board = Array.new(6) {Array.new(7,"O")}
+        @board = Array.new(6) {Array.new(7,"\u26AA")}
         @physics = board_physics 
     end
     
@@ -33,7 +33,7 @@ class Board
 
     def gameover?
         self.board.each do |row|
-            return false if row.any? { |pos| pos == "O" }
+            return false if row.any? { |pos| pos == "\u26AA" }
         end
         true
     end
